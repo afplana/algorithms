@@ -34,4 +34,12 @@ class QuickUnionUFTest {
         assertEquals(5, quickUnionUF.root(2));
         assertNotEquals(2, quickUnionUF.root(5));
     }
+
+    @Test
+    void unionWeighted(){
+        quickUnionUF.unionWeighted(5, 2);
+        assertTrue(quickUnionUF.connected(5, 2));
+        assertEquals(5, quickUnionUF.root(2));
+        assertNotEquals(2, quickUnionUF.root(5));
+    }
 }

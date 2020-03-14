@@ -8,6 +8,7 @@ package me.coursera.algorithms.unionfind;
 public class QuickUnionUF {
 
     private int[] arr;
+    private int[] extra;
 
     /**
      * Init arr of size with each object to itself
@@ -16,6 +17,7 @@ public class QuickUnionUF {
      */
     QuickUnionUF(int n) {
         arr = new int[n];
+        extra = new int[n];
         for (int i = 0; i < n; i++) arr[i] = i;
     }
 
@@ -46,6 +48,24 @@ public class QuickUnionUF {
      */
     void union(int p, int q) {
         arr[root(p)] = arr[root(q)];
+    }
+
+    /**
+     *Change root of the smallest node to the one with bigger root
+     * @param p node 1
+     * @param q node 2
+     */
+    void unionWeighted (int p, int q) {
+        int i = root(p);
+        int j = root(q);
+        if (i == j) return;
+        if (extra[i] < extra[j]) {
+            arr[i] = j;
+            extra[j] += extra[i];
+        } else {
+            arr[j] = extra[i];
+            extra[i] += extra[j];
+        }
     }
 
 }
