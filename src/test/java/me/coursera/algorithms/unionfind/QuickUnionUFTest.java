@@ -13,6 +13,9 @@ class QuickUnionUFTest {
     void setUp() {
         quickUnionUF = new QuickUnionUF(10);
         quickUnionUF.union(0, 5);
+        quickUnionUF.unionWeighted(1, 7);
+        quickUnionUF.unionWeighted(7, 4);
+        quickUnionUF.unionWeighted(7, 6);
     }
 
     @Test
@@ -30,9 +33,11 @@ class QuickUnionUFTest {
     @Test
     void union() {
         quickUnionUF.union(2, 5);
+        quickUnionUF.union(4, 6);
         assertTrue(quickUnionUF.connected(5, 2));
         assertEquals(5, quickUnionUF.root(2));
         assertNotEquals(2, quickUnionUF.root(5));
+        assertEquals(5, quickUnionUF.rootWPC(7));
     }
 
     @Test

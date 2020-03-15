@@ -7,7 +7,7 @@ package me.coursera.algorithms.unionfind;
  */
 public class QuickUnionUF {
 
-    private int[] arr;
+     int[] arr;
     private int[] extra;
 
     /**
@@ -31,6 +31,21 @@ public class QuickUnionUF {
         return root(arr[i]);
     }
 
+
+    /**
+     * With Improvements of path compression (makes every node to point directly to the root)
+     * Search in parent pointers until reach the root
+     * @param i index of node
+     * @return index of root
+     */
+    int rootWPC(int i) {
+        if (i == arr[i]) return i;
+        else {
+            arr[i] = arr[arr[i]];
+            return rootWPC(arr[i]);
+        }
+    }
+
     /**
      * Check if two nodes have the same root
      * @param p node 1
@@ -51,7 +66,8 @@ public class QuickUnionUF {
     }
 
     /**
-     *Change root of the smallest node to the one with bigger root
+     *Improvement over normal {@code QuickUnion}. {@code access = log N}
+     * Change root of the smallest node to the one with bigger root
      * @param p node 1
      * @param q node 2
      */
