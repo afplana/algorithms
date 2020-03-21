@@ -2,13 +2,12 @@ package me.coursera.algorithms.unionfind;
 
 /**
  * Implementation of the Quick-Union algorithm (lazy approach)
- * Expensive algorithm, needs N array accesses, the trees can get tall and has an extra cost of find
+ * Expensive algorithm, needs NxN array accesses, the trees can get tall and has an extra cost of find
  * the root element
  */
 public class QuickUnionUF {
 
-     int[] arr;
-    private int[] extra;
+    int[] arr;
 
     /**
      * Init arr of size with each object to itself
@@ -17,12 +16,12 @@ public class QuickUnionUF {
      */
     QuickUnionUF(int n) {
         arr = new int[n];
-        extra = new int[n];
         for (int i = 0; i < n; i++) arr[i] = i;
     }
 
     /**
      * Search in parent pointers until reach the root
+     *
      * @param i index of node
      * @return index of root
      */
@@ -31,23 +30,9 @@ public class QuickUnionUF {
         return root(arr[i]);
     }
 
-
-    /**
-     * With Improvements of path compression (makes every node to point directly to the root)
-     * Search in parent pointers until reach the root
-     * @param i index of node
-     * @return index of root
-     */
-    int rootWPC(int i) {
-        if (i == arr[i]) return i;
-        else {
-            arr[i] = arr[arr[i]];
-            return rootWPC(arr[i]);
-        }
-    }
-
     /**
      * Check if two nodes have the same root
+     *
      * @param p node 1
      * @param q node 2
      * @return True if nodes have the same root False in other case
@@ -57,31 +42,12 @@ public class QuickUnionUF {
     }
 
     /**
-     *Change root of p to point to root of q
+     * Change root of p to point to root of q
+     *
      * @param p node 1
      * @param q node 2
      */
     void union(int p, int q) {
         arr[root(p)] = arr[root(q)];
     }
-
-    /**
-     *Improvement over normal {@code QuickUnion}. {@code access = log N}
-     * Change root of the smallest node to the one with bigger root
-     * @param p node 1
-     * @param q node 2
-     */
-    void unionWeighted (int p, int q) {
-        int i = root(p);
-        int j = root(q);
-        if (i == j) return;
-        if (extra[i] < extra[j]) {
-            arr[i] = j;
-            extra[j] += extra[i];
-        } else {
-            arr[j] = extra[i];
-            extra[i] += extra[j];
-        }
-    }
-
 }
